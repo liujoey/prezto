@@ -49,8 +49,6 @@ alias ssh='ssh -Y'
 
 stty -ixon
 [ -n "$TMUX" ] && export TERM=screen-256color
-# dircolors
-eval `dircolors ~/.dotfiles/dircolors-solarized/dircolors.256dark`
 
 # key-binding
 fancy-ctrl-z () {
@@ -67,6 +65,11 @@ bindkey '^Z' fancy-ctrl-z
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
 
-source "/etc/zsh_command_not_found"
+if [[ $OSTYPE =~ 'linux' ]]; then
+  #statements
+  source "/etc/zsh_command_not_found"
+  # dircolors
+  eval `dircolors ~/.dotfiles/dircolors-solarized/dircolors.256dark`
+fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.dotfiles/vim/gruvbox_256palette.sh ] && source ~/.dotfiles/vim/gruvbox_256palette.sh
