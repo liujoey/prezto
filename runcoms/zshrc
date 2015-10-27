@@ -48,7 +48,7 @@ alias ts='tmuxinator start'
 alias ssh='ssh -Y'
 
 stty -ixon
-[ -n "$TMUX" ] && export TERM=screen-256color
+[ -n "$TMUX" ] && export TERM=tmux-256color
 
 # key-binding
 fancy-ctrl-z () {
