@@ -29,6 +29,23 @@ export FZF_DEFAULT_COMMAND='ag -l 2> /dev/null'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--color light'
 
+#
+# Mac os location based proxy auto config
+#
+if [[ $OSTYPE =~ 'darwin' ]]; then
+  proxy_string=`networksetup -getwebproxy 'Wi-Fi'`
+  proxy_enabled=`print $proxy_string | head -n 1 | awk '{print $2}'`
+  if [[ $proxy_enabled == 'Yes' ]]; then
+    export http_proxy=`print $proxy_string | awk '{ print $2}' | awk '{getline l2; getline l3; print "http://"l2":"l3}' | head -n 1`
+    export https_proxy=$http_proxy
+    export ALL_PROXY=$http_proxy
+  else
+    unset http_proxy
+    unset https_proxy
+    unset ALL_PROXY
+  fi
+fi
+
 # because typing 'cd' is A LOT of work!!
 alias ..='cd ../'
 alias ...='cd ../../'
@@ -72,4 +89,4 @@ if [[ $OSTYPE =~ 'linux' ]]; then
   eval `dircolors ~/.dotfiles/dircolors-solarized/dircolors.256dark`
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.dotfiles/vim/gruvbox_256palette.sh ] && source ~/.dotfiles/vim/gruvbox_256palette.sh
+[ -f ~/.gruvbox_256palette.sh ] && source ~/.gruvbox_256palette.sh
