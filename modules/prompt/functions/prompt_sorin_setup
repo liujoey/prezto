@@ -65,11 +65,15 @@ function prompt_sorin_precmd {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
 
+  if (( $+functions[python-info] )); then
+    python-info
+  fi
+
   # Format PWD.
   _prompt_sorin_pwd=$(promptpwd)
 
   # Define prompts.
-  RPROMPT='${editor_info[overwrite]}%(?:: %F{1}⏎%f)${VIM:+" %B%F{6}V%f%b"}'
+  RPROMPT='${editor_info[overwrite]}%(?:: %F{1}⏎%f)${VIM:+" %B%F{6}V%f%b"}$python_info[virtualenv]'
 
   # Kill the old process of slow commands if it is still running.
   if (( _prompt_sorin_precmd_async_pid > 0 )); then
@@ -118,6 +122,9 @@ function prompt_sorin_setup {
   zstyle ':prezto:module:git:info:untracked' format ' %%B%F{7}◼%f%%b'
   zstyle ':prezto:module:git:info:keys' format \
     'status' '$(coalesce "%b" "%p" "%c")%s%A%B%S%a%d%m%r%U%u'
+
+  # Set python-info parameters.
+  zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
 
   # Define prompts.
   PROMPT='${SSH_TTY:+"%F{9}%n%f%F{7}@%f%F{3}%m%f "}%F{4}${_prompt_sorin_pwd}%(!. %B%F{1}#%f%b.)${editor_info[keymap]} '
