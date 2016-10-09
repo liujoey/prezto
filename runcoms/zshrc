@@ -93,7 +93,6 @@ if [[ $OSTYPE =~ 'linux' ]]; then
   eval `dircolors ~/.dotfiles/dircolors-solarized/dircolors.256dark`
 fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/.gruvbox_256palette.sh ] && source ~/.gruvbox_256palette.sh
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
