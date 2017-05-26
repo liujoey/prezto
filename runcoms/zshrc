@@ -60,6 +60,10 @@ alias vim='nvim'
 # ssh
 alias ssh='ssh -Y'
 
+# ssh for open stack
+alias ossh="ssh -o ProxyCommand='ssh -W %h:%p bastion-os' -o StrictHostKeyChecking=no -o UserKnownHostsFile='/dev/null'"
+
+# Tmux
 stty -ixon
 [ -n "$TMUX" ] && export TERM=tmux-256color
 
