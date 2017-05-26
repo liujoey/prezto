@@ -31,11 +31,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--color light'
 
 #
-# FASD
-#
-eval "$(fasd --init auto)"
-
-#
 # Mac os location based proxy auto config
 #
 if [[ $OSTYPE =~ 'darwin' ]]; then
