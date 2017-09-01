@@ -84,6 +84,8 @@ bindkey -M viins '^W' backward-kill-word
 bindkey -M viins '^U' kill-whole-line
 bindkey -M viins '^P' up-history
 bindkey -M viins '^N' down-history
+bindkey -M viins '^K' history-substring-search-up
+bindkey -M viins '^J' history-substring-search-down
 
 if [[ $OSTYPE =~ 'linux' ]]; then
   #statements
@@ -91,7 +93,6 @@ if [[ $OSTYPE =~ 'linux' ]]; then
   # dircolors
   eval `dircolors ~/.dotfiles/dircolors-solarized/dircolors.256dark`
 fi
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if [ -n "$INSIDE_EMACS" ]; then
     export EDITOR=emacsclient
@@ -108,7 +109,30 @@ some_remote_commands=(scp rsync)
 zstyle -e :urlglobber url-other-schema \
   '[[ $some_remote_commands[(i)$words[1]] -le ${#some_remote_commands} ]] && reply=("*") || reply=(http https ftp)'
 
-# # golang
-export GOPATH=$(go env GOPATH)
-export PATH=$PATH:$GOPATH/bin
-export PATH="/usr/local/opt/libxml2/bin:$PATH"
+# install zplug
+if [[ ! -d ~/.zplug ]];then
+  git clone https://github.com/zplug/zplug.git ~/.zplug
+  source ~/.zplug/init.zsh
+  zplug update --self
+fi
+
+source ~/.zplug/init.zsh
+
+# zsh plugins
+zplug "rimraf/k"
+zplug "djui/alias-tips"
+zplug "b4b4r07/enhancd", use:init.sh
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
+fi
+
+
+zplug load
+
+alias k='k -h'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
